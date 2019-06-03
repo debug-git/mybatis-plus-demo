@@ -1,5 +1,6 @@
 package com.example.mpdemo.mapper;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.example.mpdemo.entity.City;
 import com.example.mpdemo.entity.User;
@@ -26,6 +27,11 @@ public class TestUserMapper {
     public void testSelect(){
         List<User> users = userMapper.selectBatchIds(Arrays.asList(2, 3, 4));
         System.out.println(users);
-//        cityMapper.selectOne();
+
+        QueryWrapper<City> queryWrapper = new QueryWrapper<>();
+        queryWrapper
+                .eq("city", "1101");
+        City city = cityMapper.selectOne(queryWrapper);
+        System.out.println(city);
     }
 }

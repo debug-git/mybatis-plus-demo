@@ -12,7 +12,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        province, city, zone, desc
+        province, city,`zone`, `desc`
     </sql>
 
 </mapper>
