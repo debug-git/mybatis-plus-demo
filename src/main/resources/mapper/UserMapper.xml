@@ -4,16 +4,63 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.example.mpdemo.entity.User">
-        <result column="province" property="userId" />
-        <result column="city" property="userName" />
-        <result column="zone" property="password" />
-        <result column="" property="password"/>
-        <result column="desc" property="modifyTime" />
+        <result column="userId" property="userId" />
+        <result column="userName" property="userName" />
+        <result column="password" property="password" />
+        <result column="phone" property="phone"/>
+        <result column="modifyTime" property="modifyTime" />
+        <result column="createTime" property="createTime"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        userId,userName,password,phone,modifyTime
+        userId,userName,password,phone,modifyTime,createTime
     </sql>
 
+    <select id="selectUserAndRole" resultType="com.example.mpdemo.entity.User">
+      select u.* ,r.id as `role.id`,r.name as `role.name`
+      from `user` u
+      left join user_role ur on ur.`userId` = u.`userId`
+      left join `role` r on r.id = ur.`roleId`
+      limit 10
+    </select>
+
+    <resultMap id="powerResultMap" type="com.example.mpdemo.entity.User">
+        <result column="userId" property="userId" />
+        <result column="userName" property="userName" />
+        <result column="password" property="password" />
+        <result column="phone" property="phone"/>
+        <result column="modifyTime" property="modifyTime" />
+        <result column="createTime" property="createTime"/>
+        <association property="role" javaType="com.example.mpdemo.entity.Role">
+            <id column="roleId" property="id"/>
+            <result column="role_name" property="name"/>
+        </association>
+    </resultMap>
+    <select id="selectUserByResultMap" resultMap="powerResultMap">
+         select u.* ,r.id as `roleId`,r.name as `role_name`
+          from `user` u
+          left join user_role ur on ur.`userId` = u.`userId`
+          left join `role` r on r.id = ur.`roleId`
+          limit 10
+    </select>
+
+    <resultMap id="batchResultMap" type="com.example.mpdemo.vo.UserVO">
+        <result column="userId" property="userId" />
+        <result column="userName" property="userName" />
+        <result column="password" property="password" />
+        <result column="phone" property="phone"/>
+        <result column="modifyTime" property="modifyTime" />
+        <result column="createTime" property="createTime"/>
+        <collection property="role" ofType="com.example.mpdemo.entity.Role">
+            <id column="roleId" property="id"/>
+            <result column="role_name" property="name"/>
+        </collection>
+    </resultMap>
+    <select id="selectBatchRoleUser" resultMap="batchResultMap">
+        select u.*,r.id as `roleId`,r.name as `role_name` from `user` u
+        left join user_role ur on ur.`userId` = u.`userId`
+        left join `role` r on r.id = ur.`roleId`
+        where u.`userId` = #{userId}
+    </select>
 </mapper>

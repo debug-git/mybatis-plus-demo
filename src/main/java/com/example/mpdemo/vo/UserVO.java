@@ -1,16 +1,16 @@
-package com.example.mpdemo.entity;
+package com.example.mpdemo.vo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.example.mpdemo.entity.Role;
 import lombok.Data;
 
-import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Data
-public class User  implements Serializable {
-
+public class UserVO {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "userId", type = IdType.AUTO)
@@ -29,6 +29,5 @@ public class User  implements Serializable {
     @TableField("createTime")
     private Date createTime;
 
-    private Role role;
+    private List<Role> role;
 }
-
