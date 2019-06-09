@@ -21,7 +21,7 @@ spring:
     password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver
     name: primaryData
-    url: jdbc:mysql://localhost:3306/demo?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/demo?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
 
 mybatis-plus:
   # 开发环境配置打印SQL语句

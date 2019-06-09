@@ -29,6 +29,5 @@ public class User  implements Serializable {
     @TableField("createTime")
     private Date createTime;
 
-    private Role role;
 }
 

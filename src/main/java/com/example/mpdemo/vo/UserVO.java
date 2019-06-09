@@ -30,4 +30,27 @@ public class UserVO {
     private Date createTime;
 
     private List<Role> role;
+
+    @Data
+    public static class  User2Role{
+        private static final long serialVersionUID = 1L;
+
+        @TableId(value = "userId", type = IdType.AUTO)
+        private Integer userId;
+
+        @TableField("userName")
+        private String userName;
+
+        private String password;
+
+        private String phone;
+
+        @TableField("modifyTime")
+        private Date modifyTime;
+
+        @TableField("createTime")
+        private Date createTime;
+
+        private Role role;
+    }
 }

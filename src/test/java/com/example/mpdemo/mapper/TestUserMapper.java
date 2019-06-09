@@ -1,8 +1,6 @@
 package com.example.mpdemo.mapper;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.example.mpdemo.entity.City;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.example.mpdemo.entity.User;
 import com.example.mpdemo.vo.UserVO;
 import lombok.extern.slf4j.Slf4j;
@@ -44,15 +42,19 @@ public class TestUserMapper {
 
     /**
      * 测试多表查询
-     * 【重点】User类里面有个Role类，看mybatis如何实现一对多关联
+     * 【重点】User类里面有个Role类，看mybatis如何实现一对一关联
      */
     @Test
     public void testBatchTable(){
+        //方法一，在SQL里使用别名
         List<User> users = userMapper.selectUserAndRole();
         log.info("第一次查询结果: {}", users);
+        log.info("第一次查询结果,数据大小:{}", users.size());
 
+        //方法二，在resultMap里使用标签association
         List<User> userList = userMapper.selectUserByResultMap();
         log.info("第二次查询结果: {}", userList);
+        log.info("第二次查询结果,数据大小:{}", userList.size());
     }
 
     /**
@@ -60,7 +62,28 @@ public class TestUserMapper {
      */
     @Test
     public void testOne2Many(){
+        //在resultMap里使用collection
         UserVO userVO = userMapper.selectBatchRoleUser(3);
         log.info(userVO.toString());
+    }
+
+    @Test
+    public void testUpdateColumu(){
+        //方法一,先查询后更新
+//        User users = userMapper.selectById(4);
+//        log.info(users.toString());
+//        users.setPassword("ppp");
+//        users.setCreateTime(new Date());
+//        users.setPhone(null);
+//        userMapper.updateById(users);
+
+        //直接new一个对象,然后使用eq方法作为更新的的where条件
+        User user = new User();
+        user.setPhone("11111111111111");
+        UpdateWrapper<User> updateWrapper = new UpdateWrapper<>();
+//        updateWrapper.set("phone", "kkkkk");    //当实体和UpdateWrapper都有set相同的字段时,UpdateWrapper的优先级更高
+        updateWrapper.eq("userId", 5);
+        int update = userMapper.update(user, updateWrapper);
+        log.info(user.toString());
     }
 }

@@ -17,15 +17,16 @@
         userId,userName,password,phone,modifyTime,createTime
     </sql>
 
-    <select id="selectUserAndRole" resultType="com.example.mpdemo.entity.User">
+    <select id="selectUserAndRole" resultType="com.example.mpdemo.vo.UserVO$User2Role">
       select u.* ,r.id as `role.id`,r.name as `role.name`
       from `user` u
       left join user_role ur on ur.`userId` = u.`userId`
       left join `role` r on r.id = ur.`roleId`
+      order by ur.id
       limit 10
     </select>
 
-    <resultMap id="powerResultMap" type="com.example.mpdemo.entity.User">
+    <resultMap id="powerResultMap" type="com.example.mpdemo.vo.UserVO$User2Role">
         <result column="userId" property="userId" />
         <result column="userName" property="userName" />
         <result column="password" property="password" />
@@ -42,6 +43,7 @@
           from `user` u
           left join user_role ur on ur.`userId` = u.`userId`
           left join `role` r on r.id = ur.`roleId`
+          order by ur.id
           limit 10
     </select>
 
