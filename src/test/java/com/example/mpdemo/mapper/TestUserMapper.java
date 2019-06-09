@@ -1,6 +1,7 @@
 package com.example.mpdemo.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mpdemo.entity.User;
 import com.example.mpdemo.vo.UserVO;
 import lombok.extern.slf4j.Slf4j;
@@ -67,6 +68,9 @@ public class TestUserMapper {
         log.info(userVO.toString());
     }
 
+    /**
+     * 测试update
+     */
     @Test
     public void testUpdateColumu(){
         //方法一,先查询后更新
@@ -85,5 +89,22 @@ public class TestUserMapper {
         updateWrapper.eq("userId", 5);
         int update = userMapper.update(user, updateWrapper);
         log.info(user.toString());
+    }
+
+    /**
+     * 测试分页
+     * 要点: 需要配置 PaginationInterceptor 类
+     * sql 语句无需手动加limit
+     */
+    @Test
+    public void testPage(){
+        Page page = new Page(1,5);
+        // 不进行 count sql 优化，解决 MP 无法自动优化 SQL 问题，这时候你需要自己查询 count 部分
+//         page.setOptimizeCountSql(false);
+        // 当 total 为非 0 时(默认为 0),分页插件不会进行 count 查询
+        // 要点!! 分页返回的对象与传入的对象是同一个
+        Page<User> userPage = userMapper.selectByPage(page);
+        log.info("111111111");
+        log.info(page.toString());
     }
 }

@@ -1,6 +1,8 @@
 package com.example.mpdemo.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mpdemo.vo.UserVO;
 import com.example.mpdemo.entity.User;
 
@@ -20,4 +22,6 @@ public interface UserMapper extends BaseMapper<User> {
     List<User> selectUserByResultMap();
 
     UserVO selectBatchRoleUser(int userId);
+
+    Page<User> selectByPage(IPage page);
 }

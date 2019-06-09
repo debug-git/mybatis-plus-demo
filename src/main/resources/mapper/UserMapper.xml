@@ -65,4 +65,10 @@
         left join `role` r on r.id = ur.`roleId`
         where u.`userId` = #{userId}
     </select>
+
+    <select id="selectByPage" resultType="com.example.mpdemo.entity.User">
+        <![CDATA[
+            select u.*  from `user` u where userId < 50
+        ]]>
+    </select>
 </mapper>
